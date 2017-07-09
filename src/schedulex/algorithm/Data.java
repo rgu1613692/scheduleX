@@ -41,7 +41,7 @@ public class Data {
         Rooms room7 = new Rooms("N533", 116);
          rooms=  new ArrayList<>(Arrays.asList(room1, room2, room3,room4,room5,room6,room7));
          
-         ArrayList<String> staffInitials = new ArrayList(Arrays.asList("AF","AP","CJ", "CM", "DL", "EE", "HA", "IA", "IH", "JG"
+         ArrayList<String> staffInitials = new ArrayList<String>(Arrays.asList("AF","AP","CJ", "CM", "DL", "EE", "HA", "IA", "IH", "JG"
                                             ,"JI","JL","KH","MC","MH", "MN", "MZ", "NW","PH", "RL", "RM", "SM", "SS", "WT","YJ"));
          staffInitials.forEach(s -> {
              
@@ -64,7 +64,7 @@ public class Data {
                    
          });//End of student Group
         Num=0;
-        ArrayList<String> moduleCode = new ArrayList(Arrays.asList("CM1013","CM1014","CM1015", "CM1018", "CM1021", "CM2003", "CM2015","CM2026","CM2027",
+        ArrayList<String> moduleCode = new ArrayList<String>(Arrays.asList("CM1013","CM1014","CM1015", "CM1018", "CM1021", "CM2003", "CM2015","CM2026","CM2027",
                                         "CM2521","CM3009","CM3017","CM3019","CM3020","CM3032","CM3034","CM3039","CM3040","CM3056","CM3059","CM3068","CM3069",
                                         "CM3531","CM3600","CM4002","CM4008","CM4011","CM4017","CM4029","CM4533","CM4537","CM4539","CMM004","CMM007","CMM008",
                                         "CMM021","CMM503","CMM507","CMM528","CMM529","CMM534","CMM535","CM536","CM615"
@@ -84,11 +84,24 @@ public class Data {
                             System.out.println( day + " "+ prd);
                     
                     });//end of days of the week loop
-                   
-                   
+      
+        });//end of one hour periods loop
+        Periods.TWO_HOUR_PERIODS.forEach(prds->{
+        	Periods.DAYS_OF_THE_WEEK.forEach(day ->{
+        	System.out.println( day + " "+ prds);
+        	
+        });//end of days of the week loop
+        });//end of two hour periods loop
+        Periods.THREE_HOUR_PERIODS.forEach(prds->{
+        	Periods.DAYS_OF_THE_WEEK.forEach(day ->{
+        	System.out.println( day + " "+ prds);
+        	
+        });//end of days of the week loop
+        });//end of three hour periods loop
         
         
-        });//end of  hour periods loop
+        
+        
     }//end of initialize method
     
     public static void main (String[] args){
