@@ -81,7 +81,7 @@ public class Data {
         
         Periods.ONE_HOUR_PERIODS.forEach(prd ->{
                     Periods.DAYS_OF_THE_WEEK.forEach(day ->{
-                            System.out.println( day + " "+prd);
+                            System.out.println( day + " "+ prd);
                     
                     });//end of days of the week loop
                    
