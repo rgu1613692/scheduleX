@@ -21,17 +21,86 @@ import schedulex.domain.Staff;
  */
 public class Data {
     
-    ArrayList<Events> events;
-    ArrayList<Groups> groups;
-    ArrayList<Modules> modules;
-    ArrayList<Periods> periods;
-    ArrayList<Rooms>rooms;
-    ArrayList<Staff> staff;
-    int Num = 0;
+ 
+    ArrayList<Groups> groups = new ArrayList<>();
+    ArrayList<Periods> oneHourPeriods = new ArrayList<>();
+    ArrayList<Periods> twoHourPeriods = new ArrayList<>();
+    ArrayList<Periods> threeHourPeriods = new ArrayList<>();
+    private int numberOfModules = 0;
+    
+
+	public ArrayList<Groups> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(ArrayList<Groups> groups) {
+		this.groups = groups;
+	}
+
+	public ArrayList<Periods> getOneHourPeriods() {
+		return oneHourPeriods;
+	}
+
+	public void setOneHourPeriods(ArrayList<Periods> oneHourPeriods) {
+		this.oneHourPeriods = oneHourPeriods;
+	}
+
+	public ArrayList<Periods> getTwoHourPeriods() {
+		return twoHourPeriods;
+	}
+
+	public void setTwoHourPeriods(ArrayList<Periods> twoHourPeriods) {
+		this.twoHourPeriods = twoHourPeriods;
+	}
+
+	public ArrayList<Periods> getThreeHourPeriods() {
+		return threeHourPeriods;
+	}
+
+	public void setThreeHourPeriods(ArrayList<Periods> threeHourPeriods) {
+		this.threeHourPeriods = threeHourPeriods;
+	}
+
+	public ArrayList<Rooms> getRooms() {
+		return rooms;
+	}
+
+	public void setRooms(ArrayList<Rooms> rooms) {
+		this.rooms = rooms;
+	}
+
+	public ArrayList<Modules> getModules() {
+		return modules;
+	}
+
+	public void setModules(ArrayList<Modules> modules) {
+		this.modules = modules;
+	}
+
+	public ArrayList<Staff> getStaff() {
+		return staff;
+	}
+
+	public void setStaff(ArrayList<Staff> staff) {
+		this.staff = staff;
+	}
+
+	public int getNum() {
+		return Num;
+	}
+
+	public void setNum(int num) {
+		Num = num;
+	}
+
+	ArrayList<Rooms>rooms;
+    ArrayList<Modules> modules= new ArrayList<>();
+    ArrayList<Staff> staff = new ArrayList<>();
+    int Num = 1;
     
     public Data(){initialize();}
 
-    private void initialize() {
+    private Data initialize() {
        Rooms room1 = new Rooms("N424", 24);
         Rooms room2 = new Rooms("N523", 24);
         Rooms room3 = new Rooms("525", 30); 
@@ -45,7 +114,9 @@ public class Data {
                                             ,"JI","JL","KH","MC","MH", "MN", "MZ", "NW","PH", "RL", "RM", "SM", "SS", "WT","YJ"));
          staffInitials.forEach(s -> {
              
-                    Staff stf = new Staff(Num , s);
+        	 staff.add(new Staff(Num , s));
+                    System.out.println("Staff initial: "+s + " Staff number is: " +Num);
+                  
                    Num++;
                     
                     
@@ -60,20 +131,23 @@ public class Data {
                                                  put("DS",25);put("INS",15);
                                                }};
          maplist.forEach((k,v) ->{
-                   Groups grp = new Groups(k,v);
+                   
+                   groups.add(new Groups(k,v));
+                   System.out.println("Student Group: "+k +" Size: "+ v);
                    
          });//End of student Group
         Num=0;
         ArrayList<String> moduleCode = new ArrayList<String>(Arrays.asList("CM1013","CM1014","CM1015", "CM1018", "CM1021", "CM2003", "CM2015","CM2026","CM2027",
                                         "CM2521","CM3009","CM3017","CM3019","CM3020","CM3032","CM3034","CM3039","CM3040","CM3056","CM3059","CM3068","CM3069",
                                         "CM3531","CM3600","CM4002","CM4008","CM4011","CM4017","CM4029","CM4533","CM4537","CM4539","CMM004","CMM007","CMM008",
-                                        "CMM021","CMM503","CMM507","CMM528","CMM529","CMM534","CMM535","CM536","CM615"
+                                        "CMM021","CMM503","CMM507","CMM528","CMM529","CMM534","CMM535","CMM536","CMM615"
                                         ));
         moduleCode.forEach(course -> {
              
-                    Modules mod = new Modules(Num , course);
+                   
+                    modules.add(new Modules(Num , course));
                     Num++;
-                     //System.out.println(course+ "   "+Num);
+                     System.out.println(course+ "   "+Num);
                     
          });//end of forEach loop
         
@@ -81,6 +155,7 @@ public class Data {
         
         Periods.ONE_HOUR_PERIODS.forEach(prd ->{
                     Periods.DAYS_OF_THE_WEEK.forEach(day ->{
+                    	oneHourPeriods.add(new Periods(day, prd));
                             System.out.println( day + " "+ prd);
                     
                     });//end of days of the week loop
@@ -88,23 +163,32 @@ public class Data {
         });//end of one hour periods loop
         Periods.TWO_HOUR_PERIODS.forEach(prds->{
         	Periods.DAYS_OF_THE_WEEK.forEach(day ->{
+        		twoHourPeriods.add(new Periods(day, prds));
         	System.out.println( day + " "+ prds);
         	
         });//end of days of the week loop
         });//end of two hour periods loop
         Periods.THREE_HOUR_PERIODS.forEach(prds->{
         	Periods.DAYS_OF_THE_WEEK.forEach(day ->{
+        		threeHourPeriods.add(new Periods(day, prds));
         	System.out.println( day + " "+ prds);
         	
-        });//end of days of the week loop
+        	});//end of days of the week loop
         });//end of three hour periods loop
         
+        //To list the number of modules offered by each department
+       //groups.forEach(x -> numberOfModules +=x.getModules().size() );
         
-        
+        return this;
         
     }//end of initialize method
     
-    public static void main (String[] args){
+    public int getNumberOfModules() {
+		return this.numberOfModules;
+	}
+
+	
+	public static void main (String[] args){
         
        Data data1 = new Data ();
     }//end of main method

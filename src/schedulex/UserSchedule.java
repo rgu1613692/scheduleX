@@ -5,6 +5,12 @@
  */
 package schedulex;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import schedulex.algorithm.Data;
+import schedulex.domain.Events;
+
 /**
  *
  * @author eniol
@@ -46,7 +52,7 @@ public class UserSchedule extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
-
+        Data data1 = new Data();
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -58,20 +64,33 @@ public class UserSchedule extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setText("Select Student Groups");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CM1013", "CM1014", "CM1015", "CM1018" }));
-
+        
+        String mods[] = new String[data1.getModules().size()];
+        for(int i=0; i<data1.getModules().size(); i++){
+        	mods[i]= data1.getModules().get(i).getModuleName();
+        }
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(mods));
+        String grps[] = new String[data1.getGroups().size()];
+        for(int i =0; i<data1.getGroups().size(); i++){
+        	grps[i] = data1.getGroups().get(i).getGroupID();
+        }
         jList2.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "DM1", "CS1", "CGA1", "BIT2", "CASD3", "CNMD3" };
+            String[] strings = grps;
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
         jScrollPane2.setViewportView(jList2);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel4.setText("Select Staff (s)");
-
+        jLabel4.setText("Select Staff(s)");
+        
+        String stfs[] = new String[data1.getStaff().size()];
+        for(int i =0; i<data1.getStaff().size(); i++){
+        	stfs[i] = data1.getStaff().get(i).getStaffName();
+        }
+        
         jList3.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "MZ", "JL", "PH", "AF", "RM" };
+            String[] strings = stfs;
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
@@ -123,7 +142,6 @@ public class UserSchedule extends javax.swing.JFrame {
                     .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 297, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
@@ -132,9 +150,10 @@ public class UserSchedule extends javax.swing.JFrame {
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane3)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(149, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox3, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(133, 133, 133))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2});
@@ -176,7 +195,19 @@ public class UserSchedule extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+                        Events events= new Events(); 
+                      String Modulenum = jComboBox1.getSelectedItem().toString();
+                    ArrayList<String> stfs = (ArrayList<String>)jList2.getSelectedValuesList();
+                     ArrayList<String> grpz = (ArrayList<String>)jList3.getSelectedValuesList();
+                      String duration = jComboBox2.getSelectedItem().toString();
+                       String lectureType = jComboBox3.getSelectedItem().toString();
+                       System.out.println("The module name is: "+ Modulenum + "Duration is: "+duration + "lecture Type is: "+lectureType);
+                       stfs.forEach(x ->{ 
+                           System.out.println( x.toString()); 
+                          });
+                       grpz.forEach(x->{
+                           System.out.println( x.toString()); 
+                       });
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
