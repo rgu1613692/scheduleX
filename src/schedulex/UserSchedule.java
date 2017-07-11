@@ -10,6 +10,8 @@ import java.util.List;
 
 import schedulex.algorithm.Data;
 import schedulex.domain.Events;
+import schedulex.domain.Groups;
+import schedulex.domain.Modules;
 
 /**
  *
@@ -197,8 +199,16 @@ public class UserSchedule extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
                         Events events= new Events(); 
                       String Modulenum = jComboBox1.getSelectedItem().toString();
-                    ArrayList<String> stfs = (ArrayList<String>)jList2.getSelectedValuesList();
-                     ArrayList<String> grpz = (ArrayList<String>)jList3.getSelectedValuesList();
+                      Modules newModule = new Modules();
+                      ArrayList<String> stfs = (ArrayList<String>)jList2.getSelectedValuesList();
+                      ArrayList<String> grpz = (ArrayList<String>)jList3.getSelectedValuesList();
+                      ArrayList<Groups> selectedGroups = new ArrayList<>();
+                      Data data2 = new Data();
+                      for(Modules m:data2.getModules() ){
+                    	  if(m.getModuleName().equals(Modulenum))
+                    		  newModule = m;  
+                      }
+                     
                       String duration = jComboBox2.getSelectedItem().toString();
                        String lectureType = jComboBox3.getSelectedItem().toString();
                        System.out.println("The module name is: "+ Modulenum + "Duration is: "+duration + "lecture Type is: "+lectureType);
@@ -208,6 +218,19 @@ public class UserSchedule extends javax.swing.JFrame {
                        grpz.forEach(x->{
                            System.out.println( x.toString()); 
                        });
+                       /*not working yet
+                        * for(String s: grpz){
+                     	  for(int i=0; i<data2.getGroups().size(); i++){
+                     		  if (data2.getGroups().get(i).getGroupID()==s)
+                     			  selectedGroups.add(data2.getGroups().get(i));
+                     		 
+                     	  }
+                     	  	
+                       }
+                       
+                       System.out.println("sELECTED Group size is: "+ selectedGroups.size());
+                       */
+                   
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
