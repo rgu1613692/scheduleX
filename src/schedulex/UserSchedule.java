@@ -12,6 +12,7 @@ import schedulex.algorithm.Data;
 import schedulex.domain.Events;
 import schedulex.domain.Groups;
 import schedulex.domain.Modules;
+import schedulex.domain.Staff;
 
 /**
  *
@@ -22,6 +23,7 @@ public class UserSchedule extends javax.swing.JFrame {
     /**
      * Creates new form UserSchedule
      */
+	 ArrayList<Events> createdEvents = new ArrayList<Events>();
     public UserSchedule() {
         initComponents();
     }
@@ -197,39 +199,50 @@ public class UserSchedule extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-                        Events events= new Events(); 
+                      
                       String Modulenum = jComboBox1.getSelectedItem().toString();
                       Modules newModule = new Modules();
-                      ArrayList<String> stfs = (ArrayList<String>)jList2.getSelectedValuesList();
-                      ArrayList<String> grpz = (ArrayList<String>)jList3.getSelectedValuesList();
-                      ArrayList<Groups> selectedGroups = new ArrayList<>();
+                      ArrayList<String> grpz = (ArrayList<String>)jList2.getSelectedValuesList();
+                      ArrayList<String> stfs = (ArrayList<String>)jList3.getSelectedValuesList();
+                      ArrayList<Groups> selectedGroups = new ArrayList<Groups>();
+                      ArrayList<Staff> selectedStaffs = new ArrayList<>();
+                     
                       Data data2 = new Data();
                       for(Modules m:data2.getModules() ){
                     	  if(m.getModuleName().equals(Modulenum))
                     		  newModule = m;  
                       }
-                     
-                      String duration = jComboBox2.getSelectedItem().toString();
+                    
+                     int duration = jComboBox2.getSelectedIndex();
                        String lectureType = jComboBox3.getSelectedItem().toString();
-                       System.out.println("The module name is: "+ Modulenum + "Duration is: "+duration + "lecture Type is: "+lectureType);
-                       stfs.forEach(x ->{ 
+                       
+                      /* stfs.forEach(x ->{ 
                            System.out.println( x.toString()); 
                           });
+                      
                        grpz.forEach(x->{
                            System.out.println( x.toString()); 
-                       });
-                       /*not working yet
-                        * for(String s: grpz){
-                     	  for(int i=0; i<data2.getGroups().size(); i++){
-                     		  if (data2.getGroups().get(i).getGroupID()==s)
-                     			  selectedGroups.add(data2.getGroups().get(i));
-                     		 
-                     	  }
-                     	  	
+                       });*/
+                       for(String strng: grpz){
+                    	   String s = strng;
+                    	   for(Groups gr : data2.getGroups()){
+                    		   if (gr.getGroupID().equals(s))
+                    			 selectedGroups.add(gr);
+                    	   }
                        }
-                       
-                       System.out.println("sELECTED Group size is: "+ selectedGroups.size());
-                       */
+                      
+                       for(String strng: stfs){
+                    	   String s = strng;
+                    	   for(Staff gr : data2.getStaff()){
+                    		   if (gr.getStaffName().equals(s))
+                    			 selectedStaffs.add(gr);
+                    	   }
+                       }
+                      
+                       Events events= new Events(newModule,selectedGroups,selectedStaffs,duration,lectureType);
+                       createdEvents.add(events);
+                       System.out.println("The size of the list is : "+ createdEvents.size());
+                      
                    
     }//GEN-LAST:event_jButton1ActionPerformed
 
