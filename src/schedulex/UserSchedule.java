@@ -9,9 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import schedulex.algorithm.Data;
+import schedulex.algorithm.Fitness;
 import schedulex.domain.Events;
 import schedulex.domain.Groups;
 import schedulex.domain.Modules;
+import schedulex.domain.Periods;
 import schedulex.domain.Staff;
 
 /**
@@ -24,6 +26,7 @@ public class UserSchedule extends javax.swing.JFrame {
      * Creates new form UserSchedule
      */
 	 ArrayList<Events> createdEvents = new ArrayList<Events>();
+	 Data dataCollection = new Data();
     public UserSchedule() {
         initComponents();
     }
@@ -246,8 +249,47 @@ public class UserSchedule extends javax.swing.JFrame {
                    
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
+    	if(createdEvents.size()>0){
+    		
+    		createdEvents.forEach(x-> {
+    			x.setRooms(dataCollection.getRooms().get((int) (dataCollection.getRooms().size()*Math.random())));
+    			Periods eventPeriod = new Periods();
+    			eventPeriod.setPeriodDayGroup(eventPeriod.DAYS_OF_THE_WEEK.get((int) (eventPeriod.DAYS_OF_THE_WEEK.size()*Math.random())));
+    		if(x.getDuration()==1){
+    			eventPeriod.setPeridHourGroup(eventPeriod.ONE_HOUR_PERIODS.get((int) (eventPeriod.ONE_HOUR_PERIODS.size()*Math.random())));
+    			
+    			
+    		}
+    		if(x.getDuration()==2){
+    			eventPeriod.setPeridHourGroup(eventPeriod.TWO_HOUR_PERIODS.get((int) (eventPeriod.TWO_HOUR_PERIODS.size()*Math.random())));
+    			
+    		}
+    		if(x.getDuration()==3){
+    			eventPeriod.setPeridHourGroup(eventPeriod.THREE_HOUR_PERIODS.get((int) (eventPeriod.THREE_HOUR_PERIODS.size()*Math.random())));
+    			
+    		}
+    		x.setPeriods(eventPeriod);
+    		
+    		
+    		
+    		System.out.println("Module Name: "+x.getModule().getModuleName() + " Student Groups: "+x.getGroups().toString()+ " Period: "+x.getPeriods().getPeriodDayGroup() + " "+x.getPeriods().getPeriodHourGroup()
+    				+"Room:  "+ x.getRooms().getRoomNumber() + " Event Type: "+ x.getEventType()
+    				
+    				);
+    		
+    		});
+    		
+    		Fitness fitness = new Fitness();
+    		ArrayList<Integer> conflicts = fitness.getperiodConflicts(createdEvents);
+    		conflicts.forEach(x-> System.out.println(x));
+    		
+    	}
+    	
+    	
+    	
+    	
+       
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

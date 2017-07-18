@@ -18,6 +18,7 @@ public class Events {
     private ArrayList<Staff> staff;
     private int Duration;
     private String EventType;
+    private Periods periods;
 
     public Events(Modules module, ArrayList<Groups> groups, ArrayList<Staff> staff, int Duration, String EventType) {
         this.module = module;
@@ -30,7 +31,15 @@ public class Events {
     public Events() {
     }
 
-    public void setRooms(Rooms rooms) {
+    public Periods getPeriods() {
+		return periods;
+	}
+
+	public void setPeriods(Periods periods) {
+		this.periods = periods;
+	}
+
+	public void setRooms(Rooms rooms) {
         this.rooms = rooms;
     }
 
