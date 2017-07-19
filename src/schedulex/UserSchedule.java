@@ -27,6 +27,11 @@ public class UserSchedule extends javax.swing.JFrame {
      */
 	 ArrayList<Events> createdEvents = new ArrayList<Events>();
 	 Data dataCollection = new Data();
+	 public  static final int Population_size = 9;
+	    public static final double MUTATION_RATE = 0.1;
+	    public static final double CROSSOVER_RATE = 0.9;
+	    public static final int TOURNAMENT_SELECTION_SIZE = 3;
+	    public static final int NUMB_OF_ELITE_SCHEDULES = 1;
     public UserSchedule() {
         initComponents();
     }
@@ -63,13 +68,13 @@ public class UserSchedule extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Select Module");
+        jLabel1.setText("Select Module(s)");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel2.setText("Shedule Event");
+        jLabel2.setText("Schedule Event(s)");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("Select Student Groups");
+        jLabel3.setText("Select Student Group(s)");
 
         
         String mods[] = new String[data1.getModules().size()];

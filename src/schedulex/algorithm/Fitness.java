@@ -19,19 +19,18 @@ public class Fitness {
 	
 	
 	public ArrayList<Integer> getperiodConflicts(ArrayList<Events> eve){
-		ArrayList<Integer>  noOfStudentsforEvent = new ArrayList<Integer>();
-		
-		int num = 0;
-		for(Events s : eve){
-			for(Groups grp : s.getGroups()){
-			num += grp.getGroupSize();
-			noOfStudentsforEvent.set(eve.indexOf(s), num);
-			}
-			num=0;
-		}
+
 		 eve.forEach((Events x) -> {
-		        
-		        if (x.getRooms().getSestingCapacity()<noOfStudentsforEvent.get(eve.indexOf(x))) noOfConflicts++;
+			 int num = 0; 
+			 for(Groups grp : x.getGroups())
+					num += grp.getGroupSize();
+					
+			 if (x.getRooms().getSestingCapacity()<num){ noOfConflicts++;  
+			 
+			 System.out.println("I have a conflict here "+ num);
+				 
+			 };
+			 
 		        eve.stream().filter(y -> eve.indexOf(y) >= eve.indexOf(x)).forEach(y -> {
 		            if (x.getPeriods().equals(y.getPeriods())){
 		                if (x.getRooms() == y.getRooms())noOfConflicts++;
@@ -44,11 +43,12 @@ public class Fitness {
 		            }
 		            
 		        });
-		        noOfIndividualConflicts.set(eve.indexOf(x),noOfConflicts);
+		        noOfIndividualConflicts.add(1/noOfConflicts);
+		        noOfConflicts = 0;
 		    });
 		 
 		 
-	
+		
 		return noOfIndividualConflicts;
 	}
 	
