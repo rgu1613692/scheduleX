@@ -27,11 +27,7 @@ public class UserSchedule extends javax.swing.JFrame {
      */
 	 ArrayList<Events> createdEvents = new ArrayList<Events>();
 	 Data dataCollection = new Data();
-	 public  static final int Population_size = 9;
-	    public static final double MUTATION_RATE = 0.1;
-	    public static final double CROSSOVER_RATE = 0.9;
-	    public static final int TOURNAMENT_SELECTION_SIZE = 3;
-	    public static final int NUMB_OF_ELITE_SCHEDULES = 1;
+	 
     public UserSchedule() {
         initComponents();
     }

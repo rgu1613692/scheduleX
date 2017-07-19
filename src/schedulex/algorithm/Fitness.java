@@ -25,11 +25,10 @@ public class Fitness {
 			 for(Groups grp : x.getGroups())
 					num += grp.getGroupSize();
 					
-			 if (x.getRooms().getSestingCapacity()<num){ noOfConflicts++;  
+			 if (x.getRooms().getSestingCapacity()<num) noOfConflicts++;  
 			 
-			 System.out.println("I have a conflict here "+ num);
-				 
-			 };
+			 
+			
 			 
 		        eve.stream().filter(y -> eve.indexOf(y) >= eve.indexOf(x)).forEach(y -> {
 		            if (x.getPeriods().equals(y.getPeriods())){
