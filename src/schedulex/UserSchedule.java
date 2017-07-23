@@ -242,16 +242,58 @@ public class UserSchedule extends javax.swing.JFrame {
                     			 selectedStaffs.add(gr);
                     	   }
                        }
-                      if(!participating_Modules.contains(newModule))participating_Modules.add(newModule);
-                      selectedGroups.forEach(x-> {
-                    	  if(!participating_Groups.contains(x))
-                    		  participating_Groups.add(x);
-                      });
+                       
+                       int n= -1;
+                      if(participating_Modules.size()==0)participating_Modules.add(newModule);
+                      else {
+                    	  for (int a=0; a< participating_Modules.size(); a++){
+                    		  
+                    		  if (participating_Modules.get(a).getModuleID()==newModule.getModuleID())
+                    			  n=0;
+                    		  
+                    	  }
+                    	  if(n !=0)
+                    		  participating_Modules.add(newModule);
+                      }
                       
-                      selectedStaffs.forEach(staff -> {
-                    	  if(!participating_Staffs.contains(staff))
-                    		  participating_Staffs.add(staff);
+                      
+                      if(participating_Groups.size()==0){
+                      selectedGroups.forEach(x-> {
+                    	   participating_Groups.add(x);
                       });
+                      }
+                      else{
+                    	  for(int ab=0; ab<selectedGroups.size(); ab++ ){
+                    		  int xox = 0;
+                    	  for(int b= 0 ; b<participating_Groups.size(); b++){
+                    	  if(selectedGroups.get(ab).getGroupID().equals(participating_Groups.get(b).getGroupID()))
+                    		  xox=1;
+                      }
+                    	  if(xox !=1){
+                    		  participating_Groups.add(selectedGroups.get(ab));
+                    	  }
+                    	  }
+                      }
+                      
+                      if(participating_Staffs.size()==0){
+                          selectedStaffs.forEach(x-> {
+                        	   participating_Staffs.add(x);
+                          });
+                          }
+                      else{
+                    	  for(int ab=0; ab<selectedStaffs.size(); ab++ ){
+                    		  int xox = 0;
+                    	  for(int b= 0 ; b<participating_Staffs.size(); b++){
+                    	  if(selectedStaffs.get(ab).getStaffID()==participating_Staffs.get(b).getStaffID())
+                    		  xox=1;
+                      }
+                    	  if(xox !=1){
+                    		  participating_Staffs.add(selectedStaffs.get(ab));
+                    	  }
+                    	  }
+                    	  
+                      }
+                      
                       
                        Events events= new Events(newModule,selectedGroups,selectedStaffs,duration,lectureType);
                        createdEvents.add(events);
@@ -267,17 +309,30 @@ public class UserSchedule extends javax.swing.JFrame {
     			x.setRooms(dataCollection.getRooms().get((int) (dataCollection.getRooms().size()*Math.random())));
     			Periods eventPeriod = new Periods();
     			eventPeriod.setPeriodDayGroup(eventPeriod.DAYS_OF_THE_WEEK.get((int) (eventPeriod.DAYS_OF_THE_WEEK.size()*Math.random())));
-    		if(x.getDuration()==1){
-    			eventPeriod.setPeridHourGroup(eventPeriod.ONE_HOUR_PERIODS.get((int) (eventPeriod.ONE_HOUR_PERIODS.size()*Math.random())));
     			
+    		if(x.getDuration()==1){
+    			int xy = (int) (eventPeriod.ONE_HOUR_PERIODS.size()*Math.random());
+    			eventPeriod.setPeridHourGroup(eventPeriod.ONE_HOUR_PERIODS.get(xy));
+    			
+    			xy = Integer.parseInt(eventPeriod.ONE_HOUR_PERIODS.get(xy).substring(0, eventPeriod.ONE_HOUR_PERIODS.get(xy).indexOf(":")));
+    			eventPeriod.setStart(xy);
+    			eventPeriod.setEnd(xy+1);
+    			//System.out.println(eventPeriod.getStart() + " : "+eventPeriod.getEnd());
     			
     		}
     		if(x.getDuration()==2){
-    			eventPeriod.setPeridHourGroup(eventPeriod.TWO_HOUR_PERIODS.get((int) (eventPeriod.TWO_HOUR_PERIODS.size()*Math.random())));
-    			
+    			int xy =(int)(eventPeriod.TWO_HOUR_PERIODS.size()*Math.random());
+    			eventPeriod.setPeridHourGroup(eventPeriod.TWO_HOUR_PERIODS.get(xy));
+    			xy = Integer.parseInt(eventPeriod.TWO_HOUR_PERIODS.get(xy).substring(0, eventPeriod.TWO_HOUR_PERIODS.get(xy).indexOf(":")));
+    			eventPeriod.setStart(xy);
+    			eventPeriod.setEnd(xy+2);
     		}
     		if(x.getDuration()==3){
-    			eventPeriod.setPeridHourGroup(eventPeriod.THREE_HOUR_PERIODS.get((int) (eventPeriod.THREE_HOUR_PERIODS.size()*Math.random())));
+    			int xy = (int)(eventPeriod.THREE_HOUR_PERIODS.size()*Math.random());
+    			eventPeriod.setPeridHourGroup(eventPeriod.THREE_HOUR_PERIODS.get(xy));
+    			xy = Integer.parseInt(eventPeriod.THREE_HOUR_PERIODS.get(xy).substring(0, eventPeriod.THREE_HOUR_PERIODS.get(xy).indexOf(":")));
+    			eventPeriod.setStart(xy);
+    			eventPeriod.setEnd(xy+3);
     			
     		}
     		x.setPeriods(eventPeriod);

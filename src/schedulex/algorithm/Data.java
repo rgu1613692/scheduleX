@@ -133,6 +133,10 @@ public class Data {
          modules.forEach(m-> {
                 System.out.println(m.getModuleID()+ "  "+ m.getModuleName() );
          });
+         System.out.println("The Size of the student group list is : "+groups.size());
+         System.out.println("The Size of the Module list is : "+modules.size());
+         System.out.println("The Size of the Staff list is : "+staff.size());
+         
     };
 
     private Data initialize() {
