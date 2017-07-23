@@ -99,6 +99,41 @@ public class Data {
     int Num = 1;
     
     public Data(){initialize();}
+    
+    public Data (ArrayList<Modules> Pmods, ArrayList<Groups> Pgrps, ArrayList<Staff> Pstf){
+    	Rooms room1 = new Rooms("N424", 24);
+        Rooms room2 = new Rooms("N523", 24);
+        Rooms room3 = new Rooms("525", 30); 
+        Rooms room4 = new Rooms("527", 30);
+        Rooms room5 = new Rooms("N528", 60);
+        Rooms room6 = new Rooms("N530", 50);
+        Rooms room7 = new Rooms("N533", 116);
+         rooms=  new ArrayList<>(Arrays.asList(room1, room2, room3,room4,room5,room6,room7));
+         
+         
+         for (int i =9; i<17; i++){
+             for (String a : Periods.DAYS_OF_THE_WEEK){
+             	oneHourPeriods.add(new Periods(a, i, i+1));
+             	if (i<16)
+             		twoHourPeriods.add(new Periods(a, i, i+2));
+             	if(i<15)
+             		threeHourPeriods.add(new Periods(a, i, i+3));
+             }
+         }
+         
+         modules = Pmods;
+         staff = Pstf;
+         groups = Pgrps;
+         groups.forEach(g -> {
+            System.out.println(g.getGroupID() + "   " + g.getGroupSize());
+         });
+         staff.forEach(s-> {
+                System.out.println(s.getStaffID() +"  "+s.getStaffName());
+         });
+         modules.forEach(m-> {
+                System.out.println(m.getModuleID()+ "  "+ m.getModuleName() );
+         });
+    };
 
     private Data initialize() {
        Rooms room1 = new Rooms("N424", 24);
@@ -115,7 +150,7 @@ public class Data {
          staffInitials.forEach(s -> {
              
         	 staff.add(new Staff(Num , s));
-                    System.out.println("Staff initial: "+s + " Staff number is: " +Num);
+                    //System.out.println("Staff initial: "+s + " Staff number is: " +Num);
                   
                    Num++;
                     
@@ -133,7 +168,7 @@ public class Data {
          maplist.forEach((k,v) ->{
                    
                    groups.add(new Groups(k,v));
-                   System.out.println("Student Group: "+k +" Size: "+ v);
+                   //System.out.println("Student Group: "+k +" Size: "+ v);
                    
          });//End of student Group
         Num=0;
@@ -147,38 +182,42 @@ public class Data {
                    
                     modules.add(new Modules(Num , course));
                     Num++;
-                     System.out.println(course+ "   "+Num);
+                    // System.out.println(course+ "   "+Num);
                     
          });//end of forEach loop
         
-        ArrayList<String> meetingTimes = new ArrayList<>();
+       
+       
+     
+        for (int i =9; i<17; i++){
+                    for (String s : Periods.DAYS_OF_THE_WEEK){
+                    	oneHourPeriods.add(new Periods(s, i, i+1));
+                    	if (i<16)
+                    		twoHourPeriods.add(new Periods(s, i, i+2));
+                    	if(i<15)
+                    		threeHourPeriods.add(new Periods(s, i, i+3));
+                    }
+                 
+        }
+     
+      /*oneHourPeriods.forEach(prd -> {
+        	System.out.println(prd.getPeriodHourGroup());
+        }); 
+        System.out.println("---------------------------------------------------------------------");
         
-        Periods.ONE_HOUR_PERIODS.forEach(prd ->{
-                    Periods.DAYS_OF_THE_WEEK.forEach(day ->{
-                    	oneHourPeriods.add(new Periods(day, prd));
-                            System.out.println( day + " "+ prd);
-                    
-                    });//end of days of the week loop
-      
-        });//end of one hour periods loop
-        Periods.TWO_HOUR_PERIODS.forEach(prds->{
-        	Periods.DAYS_OF_THE_WEEK.forEach(day ->{
-        		twoHourPeriods.add(new Periods(day, prds));
-        	System.out.println( day + " "+ prds);
-        	
-        });//end of days of the week loop
-        });//end of two hour periods loop
-        Periods.THREE_HOUR_PERIODS.forEach(prds->{
-        	Periods.DAYS_OF_THE_WEEK.forEach(day ->{
-        		threeHourPeriods.add(new Periods(day, prds));
-        	System.out.println( day + " "+ prds);
-        	
-        	});//end of days of the week loop
-        });//end of three hour periods loop
         
-        //To list the number of modules offered by each department
-       //groups.forEach(x -> numberOfModules +=x.getModules().size() );
+       twoHourPeriods.forEach(prd -> {
+        	System.out.println(prd.getPeriodHourGroup());
+        }); 
+        System.out.println("---------------------------------------------------------------------");
         
+        
+       threeHourPeriods.forEach(prd -> {
+        	System.out.println(prd.getPeriodHourGroup());
+        }); 
+       System.out.println("---------------------------------------------------------------------");*/
+       
+    
         return this;
         
     }//end of initialize method

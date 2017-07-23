@@ -11,6 +11,8 @@ import java.util.Arrays;
 public class Periods {
    private String PeriodDayGroup;
    private String PeridHourGroup;
+   private int Start;
+   private int End;
 
    public static final ArrayList<String> ONE_HOUR_PERIODS =new ArrayList<>(Arrays.asList("9:00-10:00", "10:00-11:00", "11:00 - 12:00", "12:00-13:00","13:00-14:00",
                                                       "14:00-15:00", "15:00-16:00","16:00-17:00"));
@@ -19,13 +21,31 @@ public class Periods {
    public static final ArrayList<String> THREE_HOUR_PERIODS =new ArrayList<>(Arrays.asList("9:00-12:00","10:00-13:00", "11:00-14:00", "12:00-15:00", "13:00 - 16:00","14:00-17:00"));
    public static final ArrayList<String> DAYS_OF_THE_WEEK = new ArrayList<>(Arrays.asList("Mon", "Tue", "Wed", "Thur", "Fri"));
 
-    public Periods(String PeriodDayGroup, String PeridHourGroup) {
+    public Periods(String PeriodDayGroup, int start_time, int end_time) {
         this.PeriodDayGroup = PeriodDayGroup;
-        this.PeridHourGroup = PeridHourGroup;
+        this.PeridHourGroup = start_time + ":00 - " + end_time + ":00" ;
+        this.Start = start_time;
+        this.End = end_time;
         
     }
 
-    public Periods() {
+    public int getStart() {
+		return Start;
+	}
+
+	public void setStart(int start) {
+		Start = start;
+	}
+
+	public int getEnd() {
+		return End;
+	}
+
+	public void setEnd(int end) {
+		End = end;
+	}
+
+	public Periods() {
     }
     public String getPeriodDayGroup() {
         return PeriodDayGroup;

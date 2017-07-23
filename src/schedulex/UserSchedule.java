@@ -7,6 +7,7 @@ package schedulex;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 import schedulex.algorithm.Data;
 import schedulex.algorithm.Fitness;
@@ -26,7 +27,10 @@ public class UserSchedule extends javax.swing.JFrame {
      * Creates new form UserSchedule
      */
 	 ArrayList<Events> createdEvents = new ArrayList<Events>();
-	 Data dataCollection = new Data();
+	 Data full_Data = new Data ();
+	 ArrayList<Modules> participating_Modules= new ArrayList<>();
+	 ArrayList<Groups> participating_Groups = new ArrayList<>();
+	 ArrayList<Staff> participating_Staffs = new ArrayList<>();
 	 
     public UserSchedule() {
         initComponents();
@@ -54,53 +58,49 @@ public class UserSchedule extends javax.swing.JFrame {
         jComboBox2 = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         jComboBox3 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        add_Event_Button = new javax.swing.JButton();
+        Generate_TimeTable_Button = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
-        Data data1 = new Data();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Select Module(s)");
+        jLabel1.setText("Select Module");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel2.setText("Schedule Event(s)");
+        jLabel2.setText("Shedule Event");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("Select Student Group(s)");
-
-        
-        String mods[] = new String[data1.getModules().size()];
-        for(int i=0; i<data1.getModules().size(); i++){
-        	mods[i]= data1.getModules().get(i).getModuleName();
+        jLabel3.setText("Select Student Groups");
+        String[] strings1 = new String[full_Data.getModules().size()];
+        for(int i=0; i<full_Data.getModules().size(); i++){
+        	strings1[i]=full_Data.getModules().get(i).getModuleName(); 
         }
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(mods));
-        String grps[] = new String[data1.getGroups().size()];
-        for(int i =0; i<data1.getGroups().size(); i++){
-        	grps[i] = data1.getGroups().get(i).getGroupID();
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(strings1));
+        String[] strings = new String[full_Data.getGroups().size()];
+        for(int i=0; i<full_Data.getGroups().size(); i++){
+        	strings[i]=full_Data.getGroups().get(i).getGroupID(); 
         }
         jList2.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = grps;
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
         jScrollPane2.setViewportView(jList2);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel4.setText("Select Staff(s)");
+        jLabel4.setText("Select Staff (s)");
         
-        String stfs[] = new String[data1.getStaff().size()];
-        for(int i =0; i<data1.getStaff().size(); i++){
-        	stfs[i] = data1.getStaff().get(i).getStaffName();
+        String[] str = new String[full_Data.getStaff().size()];
+        for(int i=0; i<full_Data.getStaff().size(); i++){
+        	str[i]=full_Data.getStaff().get(i).getStaffName(); 
         }
-        
         jList3.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = stfs;
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+            
+            public int getSize() { return str.length; }
+            public String getElementAt(int i) { return str[i]; }
         });
         jScrollPane3.setViewportView(jList3);
 
@@ -114,17 +114,17 @@ public class UserSchedule extends javax.swing.JFrame {
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Please Select a type", "Lecture", "Lab", "Tutorial" }));
 
-        jButton1.setText("Add Event ");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        add_Event_Button.setText("Add Event ");
+        add_Event_Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                add_Event_ButtonActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Generate Timetable");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        Generate_TimeTable_Button.setText("Generate Timetable");
+        Generate_TimeTable_Button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                Generate_TimeTable_ButtonActionPerformed(evt);
             }
         });
 
@@ -153,9 +153,9 @@ public class UserSchedule extends javax.swing.JFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(add_Event_Button, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(Generate_TimeTable_Button, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -164,7 +164,7 @@ public class UserSchedule extends javax.swing.JFrame {
                 .addGap(133, 133, 133))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {Generate_TimeTable_Button, add_Event_Button});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,16 +193,16 @@ public class UserSchedule extends javax.swing.JFrame {
                 .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)))
+                    .addComponent(Generate_TimeTable_Button, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(add_Event_Button, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jButton1, jButton2});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {Generate_TimeTable_Button, add_Event_Button});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void add_Event_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_add_Event_ButtonActionPerformed
                       
                       String Modulenum = jComboBox1.getSelectedItem().toString();
                       Modules newModule = new Modules();
@@ -242,17 +242,27 @@ public class UserSchedule extends javax.swing.JFrame {
                     			 selectedStaffs.add(gr);
                     	   }
                        }
+                      if(!participating_Modules.contains(newModule))participating_Modules.add(newModule);
+                      selectedGroups.forEach(x-> {
+                    	  if(!participating_Groups.contains(x))
+                    		  participating_Groups.add(x);
+                      });
+                      
+                      selectedStaffs.forEach(staff -> {
+                    	  if(!participating_Staffs.contains(staff))
+                    		  participating_Staffs.add(staff);
+                      });
                       
                        Events events= new Events(newModule,selectedGroups,selectedStaffs,duration,lectureType);
                        createdEvents.add(events);
                        System.out.println("The size of the list is : "+ createdEvents.size());
                       
                    
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_add_Event_ButtonActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void Generate_TimeTable_ButtonActionPerformed(java.awt.event.ActionEvent evt) {
     	if(createdEvents.size()>0){
-    		
+    		Data dataCollection = new Data(participating_Modules,participating_Groups,participating_Staffs );
     		createdEvents.forEach(x-> {
     			x.setRooms(dataCollection.getRooms().get((int) (dataCollection.getRooms().size()*Math.random())));
     			Periods eventPeriod = new Periods();
@@ -285,13 +295,15 @@ public class UserSchedule extends javax.swing.JFrame {
     		ArrayList<Integer> conflicts = fitness.getperiodConflicts(createdEvents);
     		conflicts.forEach(x-> System.out.println(x));
     		
-    	}
+    	}else{
+                JOptionPane.showMessageDialog(null,"There are no Events to be Scheduled, please add Events");
+        }
     	
     	
     	
     	
        
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }                                        
 
     /**
      * @param args the command line arguments
@@ -329,8 +341,8 @@ public class UserSchedule extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton Generate_TimeTable_Button;
+    private javax.swing.JButton add_Event_Button;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
