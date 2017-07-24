@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import schedulex.domain.Events;
 import schedulex.domain.Groups;
+import schedulex.domain.Periods;
 
 
 
@@ -17,25 +18,141 @@ public class EventScheduler {
 	   private Data data; //using data coming from Data class
 	   public Data getData(){return data;}
 	   
-	   public EventScheduler(Data data){
-	       this.data = data;
-	    //   events = new ArrayList<Events>(data.getNumberOfModules()); //to know the number of events to schedule based on the number of modules offered by each department;  
+	   public EventScheduler(ArrayList<Events> eva, Data dat){
+	       this.data = dat;
+	      events= eva;
+     
 	}
-	   public EventScheduler initialize(){
-		   new ArrayList<Groups>(data.getGroups()).forEach(grp -> {//using data to pick up all the department
-		       grp.getModules().forEach(course -> { //using data to pick up all the courses
-		          
-		    	   
-		    	   
-		    	   
-		    	   
-		    	   
-		    	   
-		    	   
-		       });//end of arraylist of modules iteration block
-		   });  //end of new arraylist of groups iteration block
-		  return this;
-		}//End of initialize method   
 	   
-	   
-}//End of the EventScheduler Class
+	  public ArrayList<Events> initialize() {
+		  			events.forEach(x-> {
+		  				
+		  				x.setRooms(data.getRooms().get((int) (data.getRooms().size()*Math.random())));
+		    			Periods eventPeriod = new Periods();
+		    			eventPeriod.setPeriodDayGroup(eventPeriod.DAYS_OF_THE_WEEK.get((int) (eventPeriod.DAYS_OF_THE_WEEK.size()*Math.random())));
+		    			
+		    		if(x.getDuration()==1){
+		    			int xy = (int) (eventPeriod.ONE_HOUR_PERIODS.size()*Math.random());
+		    			eventPeriod.setPeridHourGroup(eventPeriod.ONE_HOUR_PERIODS.get(xy));
+		    			
+		    			xy = Integer.parseInt(eventPeriod.ONE_HOUR_PERIODS.get(xy).substring(0, eventPeriod.ONE_HOUR_PERIODS.get(xy).indexOf(":")));
+		    			eventPeriod.setStart(xy);
+		    			eventPeriod.setEnd(xy+1);
+		    			//System.out.println(eventPeriod.getStart() + " : "+eventPeriod.getEnd());
+		    			
+		    		}
+		    		if(x.getDuration()==2){
+		    			int xy =(int)(eventPeriod.TWO_HOUR_PERIODS.size()*Math.random());
+		    			eventPeriod.setPeridHourGroup(eventPeriod.TWO_HOUR_PERIODS.get(xy));
+		    			xy = Integer.parseInt(eventPeriod.TWO_HOUR_PERIODS.get(xy).substring(0, eventPeriod.TWO_HOUR_PERIODS.get(xy).indexOf(":")));
+		    			eventPeriod.setStart(xy);
+		    			eventPeriod.setEnd(xy+2);
+		    		}
+		    		if(x.getDuration()==3){
+		    			int xy = (int)(eventPeriod.THREE_HOUR_PERIODS.size()*Math.random());
+		    			eventPeriod.setPeridHourGroup(eventPeriod.THREE_HOUR_PERIODS.get(xy));
+		    			xy = Integer.parseInt(eventPeriod.THREE_HOUR_PERIODS.get(xy).substring(0, eventPeriod.THREE_HOUR_PERIODS.get(xy).indexOf(":")));
+		    			eventPeriod.setStart(xy);
+		    			eventPeriod.setEnd(xy+3);
+		    			
+		    		}
+		    		x.setPeriods(eventPeriod);
+		    		
+		    		
+		  				
+		  			});
+		  
+		return events;
+		  
+	  }
+	  
+	  
+	  private double calculateFitness(){//using java 8 to go through all the classes
+		    numbOfConflicts = 0;
+		    int product;
+		    
+		    for(Events x:events) {
+		        //using java 8 to go thru all the classes.
+		        if (x.getRooms().getSestingCapacity()<x.getNoStudents()) numbOfConflicts++;
+		       String se =  x.getPeriods().getPeriodDayGroup();
+		       for (int ab= 0; ab<events.size(); ab++) {
+		    	   if(events.get(ab).getPeriods().getPeriodDayGroup().equals(se) && events.get(ab).getRooms().equals(x.getRooms()) && (!events.get(ab).equals(x)) ) {
+		    	   product = events.get(ab).getDuration()*x.getDuration();
+		    	   switch(product) {
+		    	   case 1:
+		    		   if(events.get(ab).getPeriods().getStart()==x.getPeriods().getStart() )
+		    				   numbOfConflicts++;
+		    		   break;
+		    	   case 2:
+		    		   if(events.get(ab).getDuration()==1) {
+		    			   if((events.get(ab).getPeriods().getStart()==x.getPeriods().getStart())||(events.get(ab).getPeriods().getStart()-1)==x.getPeriods().getStart())
+		    				   numbOfConflicts++;
+		    			   
+		    		   }
+		    				   
+		    		   else if (x.getDuration()==1) {
+		    			   if(x.getPeriods().getStart()==events.get(ab).getPeriods().getStart()||(x.getPeriods().getStart()-1)==events.get(ab).getPeriods().getStart())
+		    				   numbOfConflicts++;
+		    			   
+		    		   }
+		    		   break;
+		    	   case 3:
+		    		   if(events.get(ab).getDuration()==3) {
+		    			   if(events.get(ab).getPeriods().getStart()==x.getPeriods().getStart()|| (x.getPeriods().getStart()-events.get(ab).getPeriods().getStart())<3) {
+		    				   numbOfConflicts++;
+		    			   }
+		    		   }
+		    		   else if (x.getDuration()==3) {
+		    			   
+		    			   if(x.getPeriods().getStart()==events.get(ab).getPeriods().getStart()|| (events.get(ab).getPeriods().getStart()-x.getPeriods().getStart())<3) {
+		    				   numbOfConflicts++;
+		    			   }
+		    			   
+		    			   
+		    		   }
+		    		   
+		    		   
+		    		   break;
+		    	   case 4:
+		    		   if(x.getPeriods().getStart()<events.get(ab).getPeriods().getStart() &&((x.getPeriods().getStart()+1)== events.get(ab).getPeriods().getStart()))
+		    			   numbOfConflicts++;
+		    		   if(x.getPeriods().getStart()>events.get(ab).getPeriods().getStart() &&((x.getPeriods().getStart()-1)== events.get(ab).getPeriods().getStart()))
+		    			   numbOfConflicts++;
+		    		   break;
+		    	   case 6:
+		    		   if(events.get(ab).getDuration()==3) {
+		    			   if(!(x.getPeriods().getStart() >=events.get(ab).getPeriods().getEnd()) && !(x.getPeriods().getEnd()<=events.get(ab).getPeriods().getStart())) 
+		    				   numbOfConflicts++;
+		    			   
+		    		   }
+		    		   else if (x.getDuration()==3) {
+		    			   if(!(events.get(ab).getPeriods().getStart() >=x.getPeriods().getEnd()) && !(events.get(ab).getPeriods().getEnd()<=x.getPeriods().getStart())) 
+		    				   numbOfConflicts++;
+		    		   }
+		    		   
+		    		   break;
+		    	   case 9:
+		    		   if(x.getPeriods().getStart()<events.get(ab).getPeriods().getStart() && !(events.get(ab).getPeriods().getStart()>=x.getPeriods().getEnd())) {
+		    			   numbOfConflicts++;
+		    			   
+		    		   }
+		    		   else if (events.get(ab).getPeriods().getStart()<x.getPeriods().getStart() && !(events.get(ab).getPeriods().getStart()>=x.getPeriods().getEnd())) {
+		    			   numbOfConflicts++;
+		  
+		    		   }
+		    		   break;
+		    	   
+		    	   }
+		    	   
+		    	
+		       
+		    	   }
+		      
+		   
+		        
+		       }
+		     
+		    }
+		    return 1/(double)(numbOfConflicts + 1);
+	  }
+}

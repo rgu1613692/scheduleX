@@ -10,6 +10,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import schedulex.algorithm.Data;
+import schedulex.algorithm.EventScheduler;
 import schedulex.algorithm.Fitness;
 import schedulex.domain.Events;
 import schedulex.domain.Groups;
@@ -31,6 +32,8 @@ public class UserSchedule extends javax.swing.JFrame {
 	 ArrayList<Modules> participating_Modules= new ArrayList<>();
 	 ArrayList<Groups> participating_Groups = new ArrayList<>();
 	 ArrayList<Staff> participating_Staffs = new ArrayList<>();
+	 ArrayList<EventScheduler> population;
+	 EventScheduler Schedule ;
 	 
     public UserSchedule() {
         initComponents();
@@ -305,47 +308,10 @@ public class UserSchedule extends javax.swing.JFrame {
     private void Generate_TimeTable_ButtonActionPerformed(java.awt.event.ActionEvent evt) {
     	if(createdEvents.size()>0){
     		Data dataCollection = new Data(participating_Modules,participating_Groups,participating_Staffs );
-    		createdEvents.forEach(x-> {
-    			x.setRooms(dataCollection.getRooms().get((int) (dataCollection.getRooms().size()*Math.random())));
-    			Periods eventPeriod = new Periods();
-    			eventPeriod.setPeriodDayGroup(eventPeriod.DAYS_OF_THE_WEEK.get((int) (eventPeriod.DAYS_OF_THE_WEEK.size()*Math.random())));
-    			
-    		if(x.getDuration()==1){
-    			int xy = (int) (eventPeriod.ONE_HOUR_PERIODS.size()*Math.random());
-    			eventPeriod.setPeridHourGroup(eventPeriod.ONE_HOUR_PERIODS.get(xy));
-    			
-    			xy = Integer.parseInt(eventPeriod.ONE_HOUR_PERIODS.get(xy).substring(0, eventPeriod.ONE_HOUR_PERIODS.get(xy).indexOf(":")));
-    			eventPeriod.setStart(xy);
-    			eventPeriod.setEnd(xy+1);
-    			//System.out.println(eventPeriod.getStart() + " : "+eventPeriod.getEnd());
-    			
-    		}
-    		if(x.getDuration()==2){
-    			int xy =(int)(eventPeriod.TWO_HOUR_PERIODS.size()*Math.random());
-    			eventPeriod.setPeridHourGroup(eventPeriod.TWO_HOUR_PERIODS.get(xy));
-    			xy = Integer.parseInt(eventPeriod.TWO_HOUR_PERIODS.get(xy).substring(0, eventPeriod.TWO_HOUR_PERIODS.get(xy).indexOf(":")));
-    			eventPeriod.setStart(xy);
-    			eventPeriod.setEnd(xy+2);
-    		}
-    		if(x.getDuration()==3){
-    			int xy = (int)(eventPeriod.THREE_HOUR_PERIODS.size()*Math.random());
-    			eventPeriod.setPeridHourGroup(eventPeriod.THREE_HOUR_PERIODS.get(xy));
-    			xy = Integer.parseInt(eventPeriod.THREE_HOUR_PERIODS.get(xy).substring(0, eventPeriod.THREE_HOUR_PERIODS.get(xy).indexOf(":")));
-    			eventPeriod.setStart(xy);
-    			eventPeriod.setEnd(xy+3);
-    			
-    		}
-    		x.setPeriods(eventPeriod);
-    		
-    		
-    		
-    		System.out.println("Module Name: "+x.getModule().getModuleName() + " Student Groups: "+x.getGroups().toString()+ " Period: "+x.getPeriods().getPeriodDayGroup() + " "+x.getPeriods().getPeriodHourGroup()
-    				+"Room:  "+ x.getRooms().getRoomNumber() + " Event Type: "+ x.getEventType()
-    				
-    				);
-    		
-    		});
-    		
+    	 Schedule = new EventScheduler(createdEvents, dataCollection);
+    	 		population = new ArrayList<>(12); 
+    	 		
+    	 		population.forEach(x-> Schedule.initialize());
     		Fitness fitness = new Fitness();
     		ArrayList<Integer> conflicts = fitness.getperiodConflicts(createdEvents);
     		conflicts.forEach(x-> System.out.println(x));

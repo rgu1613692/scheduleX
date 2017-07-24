@@ -68,6 +68,16 @@ public class Events {
     }
     
     
+    public int getNoStudents() {
+    	int number=0;
+    	for (Groups s: groups) 
+    		number+= s.getGroupSize();
+    	
+		return number;
+    	
+    }
+    
+    
     
     
   
