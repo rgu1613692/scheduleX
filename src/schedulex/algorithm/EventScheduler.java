@@ -107,13 +107,13 @@ public class EventScheduler {
 		    		   break;
 		    	   case 3:
 		    		   if(events.get(ab).getDuration()==3) {
-		    			   if(events.get(ab).getPeriods().getStart()==x.getPeriods().getStart()|| (x.getPeriods().getStart()-events.get(ab).getPeriods().getStart())<3) {
+		    			   if(events.get(ab).getPeriods().getStart()==x.getPeriods().getStart()|| ((x.getPeriods().getStart()-events.get(ab).getPeriods().getStart())<3 )&&!(x.getPeriods().getEnd() <=events.get(ab).getPeriods().getStart())) {
 		    				   numbOfConflicts++;
 		    			   }
 		    		   }
 		    		   else if (x.getDuration()==3) {
 		    			   
-		    			   if(x.getPeriods().getStart()==events.get(ab).getPeriods().getStart()|| (events.get(ab).getPeriods().getStart()-x.getPeriods().getStart())<3) {
+		    			   if(x.getPeriods().getStart()==events.get(ab).getPeriods().getStart()|| ((events.get(ab).getPeriods().getStart()-x.getPeriods().getStart())<3)&& !(events.get(ab).getPeriods().getEnd() <=x.getPeriods().getStart())) {
 		    				   numbOfConflicts++;
 		    			   }
 		    			   
@@ -125,17 +125,19 @@ public class EventScheduler {
 		    	   case 4:
 		    		   if(x.getPeriods().getStart()<events.get(ab).getPeriods().getStart() &&((x.getPeriods().getStart()+1)== events.get(ab).getPeriods().getStart()))
 		    			   numbOfConflicts++;
-		    		   if(x.getPeriods().getStart()>events.get(ab).getPeriods().getStart() &&((x.getPeriods().getStart()-1)== events.get(ab).getPeriods().getStart()))
+		    		   else if(x.getPeriods().getStart()>events.get(ab).getPeriods().getStart() &&((x.getPeriods().getStart()-1)== events.get(ab).getPeriods().getStart()))
+		    			   numbOfConflicts++;
+		    		   else if(events.get(ab).getPeriods().getStart()==x.getPeriods().getStart())
 		    			   numbOfConflicts++;
 		    		   break;
 		    	   case 6:
 		    		   if(events.get(ab).getDuration()==3) {
-		    			   if(!(x.getPeriods().getStart() >=events.get(ab).getPeriods().getEnd()) && !(x.getPeriods().getEnd()<=events.get(ab).getPeriods().getStart())) 
+		    			   if(events.get(ab).getPeriods().getStart()==x.getPeriods().getStart() || (x.getPeriods().getStart() <events.get(ab).getPeriods().getEnd() && x.getPeriods().getEnd()>events.get(ab).getPeriods().getStart())) 
 		    				   numbOfConflicts++;
 		    			   
 		    		   }
 		    		   else if (x.getDuration()==3) {
-		    			   if(!(events.get(ab).getPeriods().getStart() >=x.getPeriods().getEnd()) && !(events.get(ab).getPeriods().getEnd()<=x.getPeriods().getStart())) 
+		    			   if(x.getPeriods().getStart()==events.get(ab).getPeriods().getStart() || (events.get(ab).getPeriods().getStart() <x.getPeriods().getEnd() && events.get(ab).getPeriods().getEnd()>x.getPeriods().getStart()))  
 		    				   numbOfConflicts++;
 		    		   }
 		    		   
@@ -145,9 +147,12 @@ public class EventScheduler {
 		    			   numbOfConflicts++;
 		    			   
 		    		   }
-		    		   else if (events.get(ab).getPeriods().getStart()<x.getPeriods().getStart() && !(events.get(ab).getPeriods().getStart()>=x.getPeriods().getEnd())) {
+		    		   else if (events.get(ab).getPeriods().getStart()<x.getPeriods().getStart() && !(x.getPeriods().getStart()>=events.get(ab).getPeriods().getEnd())) {
 		    			   numbOfConflicts++;
 		  
+		    		   }
+		    		   else if (events.get(ab).getPeriods().getStart()==x.getPeriods().getStart()) {
+		    			   numbOfConflicts++;
 		    		   }
 		    		   break;
 		    	   
@@ -207,7 +212,7 @@ public class EventScheduler {
 			    		   break;
 			    	   case 3:
 			    		   if(events.get(ab).getDuration()==3) {
-			    			   if(events.get(ab).getPeriods().getStart()==x.getPeriods().getStart()|| (x.getPeriods().getStart()-events.get(ab).getPeriods().getStart())<3) {
+			    			   if(events.get(ab).getPeriods().getStart()==x.getPeriods().getStart()|| ((x.getPeriods().getStart()-events.get(ab).getPeriods().getStart())<3 &&!(x.getPeriods().getEnd() <=events.get(ab).getPeriods().getStart()))) {
 			    				   for (Staff s : x.getStaff()){
 				    				   for (Staff y: events.get(ab).getStaff()){
 				    					   if(s.getStaffID()== y.getStaffID())  numbOfConflicts++;
@@ -223,7 +228,7 @@ public class EventScheduler {
 			    		   }
 			    		   else if (x.getDuration()==3) {
 			    			   
-			    			   if(x.getPeriods().getStart()==events.get(ab).getPeriods().getStart()|| (events.get(ab).getPeriods().getStart()-x.getPeriods().getStart())<3) {
+			    			   if(x.getPeriods().getStart()==events.get(ab).getPeriods().getStart()|| ((events.get(ab).getPeriods().getStart()-x.getPeriods().getStart())<3 && !(events.get(ab).getPeriods().getEnd() <=x.getPeriods().getStart())) ){
 			    				   for (Staff s : x.getStaff()){
 				    				   for (Staff y: events.get(ab).getStaff()){
 				    					   if(s.getStaffID()== y.getStaffID())  numbOfConflicts++;
@@ -243,7 +248,7 @@ public class EventScheduler {
 			    		   
 			    		   break;
 			    	   case 4:
-			    		   if(x.getPeriods().getStart()<events.get(ab).getPeriods().getStart() &&((x.getPeriods().getStart()+1)== events.get(ab).getPeriods().getStart()))
+			    		   if(x.getPeriods().getStart()<events.get(ab).getPeriods().getStart() &&((x.getPeriods().getStart()+1)== events.get(ab).getPeriods().getStart())) {
 			    			   for (Staff s : x.getStaff()){
 			    				   for (Staff y: events.get(ab).getStaff()){
 			    					   if(s.getStaffID()== y.getStaffID())  numbOfConflicts++;
@@ -254,8 +259,8 @@ public class EventScheduler {
 		    					   if(s.getGroupID().equals(y.getGroupID()) && s.getGroupSize()==y.getGroupSize())  numbOfConflicts++;
 		    				   }
 		    			   }
-			    			
-			    		   if(x.getPeriods().getStart()>events.get(ab).getPeriods().getStart() &&((x.getPeriods().getStart()-1)== events.get(ab).getPeriods().getStart()))
+		    		   }
+			    		   else if(x.getPeriods().getStart()>events.get(ab).getPeriods().getStart() &&((x.getPeriods().getStart()-1)== events.get(ab).getPeriods().getStart())) {
 			    			   for (Staff s : x.getStaff()){
 			    				   for (Staff y: events.get(ab).getStaff()){
 			    					   if(s.getStaffID()== y.getStaffID())  numbOfConflicts++;
@@ -266,11 +271,23 @@ public class EventScheduler {
 		    					   if(s.getGroupID().equals(y.getGroupID()) && s.getGroupSize()==y.getGroupSize())  numbOfConflicts++;
 		    				   }
 		    			   }
-			    			
+		    		   }
+			    		   else if(events.get(ab).getPeriods().getStart()==x.getPeriods().getStart()) {
+			    			   for (Staff s : x.getStaff()){
+			    				   for (Staff y: events.get(ab).getStaff()){
+			    					   if(s.getStaffID()== y.getStaffID())  numbOfConflicts++;
+			    				   }
+			    			   }
+			    		   for (Groups s : x.getGroups()){
+		    				   for (Groups  y: events.get(ab).getGroups()){
+		    					   if(s.getGroupID().equals(y.getGroupID()) && s.getGroupSize()==y.getGroupSize())  numbOfConflicts++;
+		    				   }
+			    		   }
+			    		   }
 			    		   break;
 			    	   case 6:
 			    		   if(events.get(ab).getDuration()==3) {
-			    			   if(!(x.getPeriods().getStart() >=events.get(ab).getPeriods().getEnd()) && !(x.getPeriods().getEnd()<=events.get(ab).getPeriods().getStart())) 
+			    			   if(events.get(ab).getPeriods().getStart()==x.getPeriods().getStart() || (x.getPeriods().getStart() <events.get(ab).getPeriods().getEnd() && x.getPeriods().getEnd()>events.get(ab).getPeriods().getStart())) 
 			    				   for (Staff s : x.getStaff()){
 				    				   for (Staff y: events.get(ab).getStaff()){
 				    					   if(s.getStaffID()== y.getStaffID())  numbOfConflicts++;
@@ -285,7 +302,7 @@ public class EventScheduler {
 			    			   
 			    		   }
 			    		   else if (x.getDuration()==3) {
-			    			   if(!(events.get(ab).getPeriods().getStart() >=x.getPeriods().getEnd()) && !(events.get(ab).getPeriods().getEnd()<=x.getPeriods().getStart())) 
+			    			   if(events.get(ab).getPeriods().getStart()==x.getPeriods().getStart() || (x.getPeriods().getStart() <events.get(ab).getPeriods().getEnd() && x.getPeriods().getEnd()>events.get(ab).getPeriods().getStart())) 
 			    				   for (Staff s : x.getStaff()){
 				    				   for (Staff y: events.get(ab).getStaff()){
 				    					   if(s.getStaffID()== y.getStaffID())  numbOfConflicts++;
@@ -315,7 +332,7 @@ public class EventScheduler {
 			    			
 			    			   
 			    		   }
-			    		   else if (events.get(ab).getPeriods().getStart()<x.getPeriods().getStart() && !(events.get(ab).getPeriods().getStart()>=x.getPeriods().getEnd())) {
+			    		   else if (events.get(ab).getPeriods().getStart()<x.getPeriods().getStart() && !(x.getPeriods().getStart()>=events.get(ab).getPeriods().getEnd())) {
 			    			   for (Staff s : x.getStaff()){
 			    				   for (Staff y: events.get(ab).getStaff()){
 			    					   if(s.getStaffID()== y.getStaffID())  numbOfConflicts++;
@@ -328,6 +345,18 @@ public class EventScheduler {
 		    			   }
 			    			
 			  
+			    		   }
+			    		   else if (events.get(ab).getPeriods().getStart()==x.getPeriods().getStart()) {
+			    			   for (Staff s : x.getStaff()){
+			    				   for (Staff y: events.get(ab).getStaff()){
+			    					   if(s.getStaffID()== y.getStaffID())  numbOfConflicts++;
+			    				   }
+			    			   }
+			    		   for (Groups s : x.getGroups()){
+		    				   for (Groups  y: events.get(ab).getGroups()){
+		    					   if(s.getGroupID().equals(y.getGroupID()) && s.getGroupSize()==y.getGroupSize())  numbOfConflicts++;
+		    				   }
+		    			   }
 			    		   }
 			    		   break;
 			    	   
@@ -346,6 +375,8 @@ public class EventScheduler {
 		    return 1/(double)(numbOfConflicts + 1);
 	  }
 	  
+	  
+	  public int getNoOfConflicts() {return numbOfConflicts;}
 	  
 	  
 	  

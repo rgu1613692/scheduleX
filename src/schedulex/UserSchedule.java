@@ -334,7 +334,7 @@ public class UserSchedule extends javax.swing.JFrame {
         	       });
     	 		System.out.println("1----------------------------------------------------------------");
     	 		for (EventScheduler es: population){
-    	 			System.out.println(es.printout() +"| Fitness is: "+es.calculateFitness() );
+    	 			System.out.println(es.printout() +"| Fitness is: "+es.calculateFitness()  +"| Conflicts: " +es.getNoOfConflicts() );
     	 	 		
     	 		}
     	 
