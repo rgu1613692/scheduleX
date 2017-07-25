@@ -327,16 +327,16 @@ public class UserSchedule extends javax.swing.JFrame {
     	 	 		
     	 		}
     	 
-    	 		
+    	 		System.out.println("2---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
     	 		 while (population.getSchedules().get(0).calculateFitness() != 1.0) {
     	 			population = geneticAlgorithm.evolve(population).sortByFitness();
     	 			for (EventScheduler es: population.getSchedules()){
         	 			System.out.println(es.printout() +"| Fitness is: "+es.calculateFitness()  +"| Conflicts: " +es.getNoOfConflicts() );
         	 	 		
         	 		}
-        	 
+    	 			System.out.println("2---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
     	 		 }
-    	 		System.out.println("2---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+    	 		
     		
     	}else{
                 JOptionPane.showMessageDialog(null,"There are no Events to be Scheduled, please add Events");
