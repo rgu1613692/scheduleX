@@ -68,7 +68,7 @@ public class EventScheduler {
 	  }
 	  
 	  
-	  private double calculateFitness(){//using java 8 to go through all the classes
+	  public double calculateFitness(){//using java 8 to go through all the classes
 		    numbOfConflicts = 0;
 		    int product;
 		    

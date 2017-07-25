@@ -308,13 +308,21 @@ public class UserSchedule extends javax.swing.JFrame {
     private void Generate_TimeTable_ButtonActionPerformed(java.awt.event.ActionEvent evt) {
     	if(createdEvents.size()>0){
     		Data dataCollection = new Data(participating_Modules,participating_Groups,participating_Staffs );
-    	 Schedule = new EventScheduler(createdEvents, dataCollection);
-    	 		population = new ArrayList<>(12); 
+    		
+    	 		population = new ArrayList<>(); 
     	 		
-    	 		population.forEach(x-> Schedule.initialize());
-    		Fitness fitness = new Fitness();
-    		ArrayList<Integer> conflicts = fitness.getperiodConflicts(createdEvents);
-    		conflicts.forEach(x-> System.out.println(x));
+    	 		
+    	 			Schedule = new EventScheduler(createdEvents, dataCollection);
+    	 			Schedule.initialize();
+        	 		population.add(Schedule);
+    	 		
+    	 		System.out.println("1----------------------------------------------------------------");
+    	 		for (EventScheduler es: population){
+    	 			System.out.println(es.printout() +"| Fitness is: "+es.calculateFitness() );
+    	 	 		
+    	 		}
+    	 
+    	 		System.out.println("2----------------------------------------------------------------");
     		
     	}else{
                 JOptionPane.showMessageDialog(null,"There are no Events to be Scheduled, please add Events");
