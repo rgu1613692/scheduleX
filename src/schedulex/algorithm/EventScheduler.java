@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import schedulex.domain.Events;
 import schedulex.domain.Groups;
 import schedulex.domain.Periods;
+import schedulex.domain.Staff;
 
 
 
@@ -76,8 +77,9 @@ public class EventScheduler {
 		        if (x.getRooms().getSestingCapacity()<x.getNoStudents()) numbOfConflicts++;
 		       String se =  x.getPeriods().getPeriodDayGroup();
 		       for (int ab= 0; ab<events.size(); ab++) {
-		    	   if(events.get(ab).getPeriods().getPeriodDayGroup().equals(se) && events.get(ab).getRooms().equals(x.getRooms()) && (!events.get(ab).equals(x)) ) {
+		    	   if(events.get(ab).getPeriods().getPeriodDayGroup().equals(se) && (!events.get(ab).equals(x)) ) {
 		    	   product = events.get(ab).getDuration()*x.getDuration();
+		    	   if(events.get(ab).getRooms().equals(x.getRooms())){
 		    	   switch(product) {
 		    	   case 1:
 		    		   if(events.get(ab).getPeriods().getStart()==x.getPeriods().getStart() )
@@ -146,8 +148,189 @@ public class EventScheduler {
 		    	   
 		    	
 		       
+		    	   }else{
+		    		   
+		    		   
+		    		   switch(product) {
+			    	   case 1:
+			    		   if(events.get(ab).getPeriods().getStart()==x.getPeriods().getStart() )
+			    			   for (Staff s : x.getStaff()){
+			    				   for (Staff y: events.get(ab).getStaff()){
+			    					   if(s.getStaffID()== y.getStaffID())  numbOfConflicts++;
+			    				   }
+			    			   }
+			    		   for (Groups s : x.getGroups()){
+		    				   for (Groups  y: events.get(ab).getGroups()){
+		    					   if(s.getGroupID().equals(y.getGroupID()) && s.getGroupSize()==y.getGroupSize())  numbOfConflicts++;
+		    				   }
+		    			   }
+			    				  
+			    		   break;
+			    	   case 2:
+			    		   if(events.get(ab).getDuration()==1) {
+			    			   if((events.get(ab).getPeriods().getStart()==x.getPeriods().getStart())||(events.get(ab).getPeriods().getStart()-1)==x.getPeriods().getStart())
+			    				   for (Staff s : x.getStaff()){
+				    				   for (Staff y: events.get(ab).getStaff()){
+				    					   if(s.getStaffID()== y.getStaffID())  numbOfConflicts++;
+				    				   }
+				    			   }
+				    		   for (Groups s : x.getGroups()){
+			    				   for (Groups  y: events.get(ab).getGroups()){
+			    					   if(s.getGroupID().equals(y.getGroupID()) && s.getGroupSize()==y.getGroupSize())  numbOfConflicts++;
+			    				   }
+			    			   }
+				    			
+			    			   
+			    		   }
+			    				   
+			    		   else if (x.getDuration()==1) {
+			    			   if(x.getPeriods().getStart()==events.get(ab).getPeriods().getStart()||(x.getPeriods().getStart()-1)==events.get(ab).getPeriods().getStart())
+			    				   for (Staff s : x.getStaff()){
+				    				   for (Staff y: events.get(ab).getStaff()){
+				    					   if(s.getStaffID()== y.getStaffID())  numbOfConflicts++;
+				    				   }
+				    			   }
+				    		   for (Groups s : x.getGroups()){
+			    				   for (Groups  y: events.get(ab).getGroups()){
+			    					   if(s.getGroupID().equals(y.getGroupID()) && s.getGroupSize()==y.getGroupSize())  numbOfConflicts++;
+			    				   }
+			    			   }
+				    			
+			    		   }
+			    		   break;
+			    	   case 3:
+			    		   if(events.get(ab).getDuration()==3) {
+			    			   if(events.get(ab).getPeriods().getStart()==x.getPeriods().getStart()|| (x.getPeriods().getStart()-events.get(ab).getPeriods().getStart())<3) {
+			    				   for (Staff s : x.getStaff()){
+				    				   for (Staff y: events.get(ab).getStaff()){
+				    					   if(s.getStaffID()== y.getStaffID())  numbOfConflicts++;
+				    				   }
+				    			   }
+				    		   for (Groups s : x.getGroups()){
+			    				   for (Groups  y: events.get(ab).getGroups()){
+			    					   if(s.getGroupID().equals(y.getGroupID()) && s.getGroupSize()==y.getGroupSize())  numbOfConflicts++;
+			    				   }
+			    			   }
+				    			
+			    			   }
+			    		   }
+			    		   else if (x.getDuration()==3) {
+			    			   
+			    			   if(x.getPeriods().getStart()==events.get(ab).getPeriods().getStart()|| (events.get(ab).getPeriods().getStart()-x.getPeriods().getStart())<3) {
+			    				   for (Staff s : x.getStaff()){
+				    				   for (Staff y: events.get(ab).getStaff()){
+				    					   if(s.getStaffID()== y.getStaffID())  numbOfConflicts++;
+				    				   }
+				    			   }
+				    		   for (Groups s : x.getGroups()){
+			    				   for (Groups  y: events.get(ab).getGroups()){
+			    					   if(s.getGroupID().equals(y.getGroupID()) && s.getGroupSize()==y.getGroupSize())  numbOfConflicts++;
+			    				   }
+			    			   }
+				    			
+			    			   }
+			    			   
+			    			   
+			    		   }
+			    		   
+			    		   
+			    		   break;
+			    	   case 4:
+			    		   if(x.getPeriods().getStart()<events.get(ab).getPeriods().getStart() &&((x.getPeriods().getStart()+1)== events.get(ab).getPeriods().getStart()))
+			    			   for (Staff s : x.getStaff()){
+			    				   for (Staff y: events.get(ab).getStaff()){
+			    					   if(s.getStaffID()== y.getStaffID())  numbOfConflicts++;
+			    				   }
+			    			   }
+			    		   for (Groups s : x.getGroups()){
+		    				   for (Groups  y: events.get(ab).getGroups()){
+		    					   if(s.getGroupID().equals(y.getGroupID()) && s.getGroupSize()==y.getGroupSize())  numbOfConflicts++;
+		    				   }
+		    			   }
+			    			
+			    		   if(x.getPeriods().getStart()>events.get(ab).getPeriods().getStart() &&((x.getPeriods().getStart()-1)== events.get(ab).getPeriods().getStart()))
+			    			   for (Staff s : x.getStaff()){
+			    				   for (Staff y: events.get(ab).getStaff()){
+			    					   if(s.getStaffID()== y.getStaffID())  numbOfConflicts++;
+			    				   }
+			    			   }
+			    		   for (Groups s : x.getGroups()){
+		    				   for (Groups  y: events.get(ab).getGroups()){
+		    					   if(s.getGroupID().equals(y.getGroupID()) && s.getGroupSize()==y.getGroupSize())  numbOfConflicts++;
+		    				   }
+		    			   }
+			    			
+			    		   break;
+			    	   case 6:
+			    		   if(events.get(ab).getDuration()==3) {
+			    			   if(!(x.getPeriods().getStart() >=events.get(ab).getPeriods().getEnd()) && !(x.getPeriods().getEnd()<=events.get(ab).getPeriods().getStart())) 
+			    				   for (Staff s : x.getStaff()){
+				    				   for (Staff y: events.get(ab).getStaff()){
+				    					   if(s.getStaffID()== y.getStaffID())  numbOfConflicts++;
+				    				   }
+				    			   }
+				    		   for (Groups s : x.getGroups()){
+			    				   for (Groups  y: events.get(ab).getGroups()){
+			    					   if(s.getGroupID().equals(y.getGroupID()) && s.getGroupSize()==y.getGroupSize())  numbOfConflicts++;
+			    				   }
+			    			   }
+				    			
+			    			   
+			    		   }
+			    		   else if (x.getDuration()==3) {
+			    			   if(!(events.get(ab).getPeriods().getStart() >=x.getPeriods().getEnd()) && !(events.get(ab).getPeriods().getEnd()<=x.getPeriods().getStart())) 
+			    				   for (Staff s : x.getStaff()){
+				    				   for (Staff y: events.get(ab).getStaff()){
+				    					   if(s.getStaffID()== y.getStaffID())  numbOfConflicts++;
+				    				   }
+				    			   }
+				    		   for (Groups s : x.getGroups()){
+			    				   for (Groups  y: events.get(ab).getGroups()){
+			    					   if(s.getGroupID().equals(y.getGroupID()) && s.getGroupSize()==y.getGroupSize())  numbOfConflicts++;
+			    				   }
+			    			   }
+				    			
+			    		   }
+			    		   
+			    		   break;
+			    	   case 9:
+			    		   if(x.getPeriods().getStart()<events.get(ab).getPeriods().getStart() && !(events.get(ab).getPeriods().getStart()>=x.getPeriods().getEnd())) {
+			    			   for (Staff s : x.getStaff()){
+			    				   for (Staff y: events.get(ab).getStaff()){
+			    					   if(s.getStaffID()== y.getStaffID())  numbOfConflicts++;
+			    				   }
+			    			   }
+			    		   for (Groups s : x.getGroups()){
+		    				   for (Groups  y: events.get(ab).getGroups()){
+		    					   if(s.getGroupID().equals(y.getGroupID()) && s.getGroupSize()==y.getGroupSize())  numbOfConflicts++;
+		    				   }
+		    			   }
+			    			
+			    			   
+			    		   }
+			    		   else if (events.get(ab).getPeriods().getStart()<x.getPeriods().getStart() && !(events.get(ab).getPeriods().getStart()>=x.getPeriods().getEnd())) {
+			    			   for (Staff s : x.getStaff()){
+			    				   for (Staff y: events.get(ab).getStaff()){
+			    					   if(s.getStaffID()== y.getStaffID())  numbOfConflicts++;
+			    				   }
+			    			   }
+			    		   for (Groups s : x.getGroups()){
+		    				   for (Groups  y: events.get(ab).getGroups()){
+		    					   if(s.getGroupID().equals(y.getGroupID()) && s.getGroupSize()==y.getGroupSize())  numbOfConflicts++;
+		    				   }
+		    			   }
+			    			
+			  
+			    		   }
+			    		   break;
+			    	   
+			    	   }
+		    		   
+		    		   
+		    		   
+		    		   
 		    	   }
-		      
+		    	   }
 		   
 		        
 		       }
