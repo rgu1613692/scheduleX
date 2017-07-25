@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import schedulex.algorithm.Data;
 import schedulex.algorithm.EventScheduler;
 import schedulex.algorithm.Genetic_Algorithm;
+import schedulex.algorithm.Population;
 import schedulex.domain.Events;
 import schedulex.domain.Groups;
 import schedulex.domain.Modules;
@@ -35,7 +36,7 @@ public class UserSchedule extends javax.swing.JFrame {
 	 ArrayList<Modules> participating_Modules= new ArrayList<>();
 	 ArrayList<Groups> participating_Groups = new ArrayList<>();
 	 ArrayList<Staff> participating_Staffs = new ArrayList<>();
-	 ArrayList<EventScheduler> population;
+	// ArrayList<EventScheduler> population;
 	 EventScheduler Schedule ;
 	 
     public UserSchedule() {
@@ -311,34 +312,30 @@ public class UserSchedule extends javax.swing.JFrame {
     private void Generate_TimeTable_ButtonActionPerformed(java.awt.event.ActionEvent evt) {
     	if(createdEvents.size()>0){
     		Data dataCollection = new Data(participating_Modules,participating_Groups,participating_Staffs );
-    		
-    	 		population = new ArrayList<>(); 
+    		Schedule = new EventScheduler(createdEvents, dataCollection);
+ 			Schedule.initialize();
+    	 		//population = new ArrayList<>(); 
+ 			
+    	 		
+    	 		 Genetic_Algorithm geneticAlgorithm = new Genetic_Algorithm(Schedule, dataCollection);
+    	 		Population population = new Population(10, Schedule, dataCollection).sortByFitness();
     	 		
     	 		
-    	 			Schedule = new EventScheduler(createdEvents, dataCollection);
-    	 			Schedule.initialize();
-        	 		population.add(Schedule);
-        	 		IntStream.range(0,11).forEach(x -> 
-        	 		{
-        	 			EventScheduler s= new EventScheduler(Schedule, dataCollection);
-        	 			//s.initialize();
-        	 			population.add(s);
-        	 		}
-        	 				
-        	 				);
-        	 	population.sort((schedule1, schedule2) -> {
-        	        int returnValue = 0;
-        	        if (schedule1.calculateFitness() > schedule2.calculateFitness()) returnValue = -1;
-        	        else if (schedule1.calculateFitness()< schedule2.calculateFitness()) returnValue = 1;
-        	        return returnValue;
-        	       });
-    	 		System.out.println("1----------------------------------------------------------------");
-    	 		for (EventScheduler es: population){
+    	 		System.out.println("1---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+    	 		for (EventScheduler es: population.getSchedules()){
     	 			System.out.println(es.printout() +"| Fitness is: "+es.calculateFitness()  +"| Conflicts: " +es.getNoOfConflicts() );
     	 	 		
     	 		}
     	 
-    	 		System.out.println("2----------------------------------------------------------------");
+    	 		
+    	 		 while (population.getSchedules().get(0).calculateFitness() != 1.0) {
+    	 			for (EventScheduler es: population.getSchedules()){
+        	 			System.out.println(es.printout() +"| Fitness is: "+es.calculateFitness()  +"| Conflicts: " +es.getNoOfConflicts() );
+        	 	 		
+        	 		}
+        	 
+    	 		 }
+    	 		System.out.println("2---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
     		
     	}else{
                 JOptionPane.showMessageDialog(null,"There are no Events to be Scheduled, please add Events");
