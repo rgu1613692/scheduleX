@@ -329,6 +329,7 @@ public class UserSchedule extends javax.swing.JFrame {
     	 
     	 		
     	 		 while (population.getSchedules().get(0).calculateFitness() != 1.0) {
+    	 			population = geneticAlgorithm.evolve(population).sortByFitness();
     	 			for (EventScheduler es: population.getSchedules()){
         	 			System.out.println(es.printout() +"| Fitness is: "+es.calculateFitness()  +"| Conflicts: " +es.getNoOfConflicts() );
         	 	 		
