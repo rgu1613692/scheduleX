@@ -338,4 +338,27 @@ public class EventScheduler {
 		    }
 		    return 1/(double)(numbOfConflicts + 1);
 	  }
+	  
+	  
+	  
+	  
+	  
+	  public String printout(){
+		  String print = "{";
+		  for (Events evt : events){
+			  print+= "[ "+evt.getModule().getModuleName()+", { ";
+			  for(Groups gp: evt.getGroups()){
+				  print+=gp.getGroupID()+", ";
+			  }
+			  print+=" } , {";
+			  for(Staff st: evt.getStaff()){
+				  print+=st.getStaffName()+ ", ";
+			  }
+			  print+=" } , "+ evt.getRooms().getRoomNumber() + ", "+ evt.getPeriods().getPeriodDayGroup() + " "+evt.getPeriods().getPeriodHourGroup()+", "+evt.getEventType()+ " ]" ;
+			  
+		  }
+		  print+= " }";
+		  
+		  return print;
+	  }
 }
