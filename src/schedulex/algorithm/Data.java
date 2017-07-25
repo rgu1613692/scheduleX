@@ -103,8 +103,8 @@ public class Data {
     public Data (ArrayList<Modules> Pmods, ArrayList<Groups> Pgrps, ArrayList<Staff> Pstf){
     	Rooms room1 = new Rooms("N424", 24);
         Rooms room2 = new Rooms("N523", 24);
-        Rooms room3 = new Rooms("525", 30); 
-        Rooms room4 = new Rooms("527", 30);
+        Rooms room3 = new Rooms("N525", 30); 
+        Rooms room4 = new Rooms("N527", 30);
         Rooms room5 = new Rooms("N528", 60);
         Rooms room6 = new Rooms("N530", 50);
         Rooms room7 = new Rooms("N533", 116);

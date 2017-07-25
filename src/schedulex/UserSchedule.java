@@ -7,11 +7,14 @@ package schedulex;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
+
 import javax.swing.JOptionPane;
+
 
 import schedulex.algorithm.Data;
 import schedulex.algorithm.EventScheduler;
-import schedulex.algorithm.Fitness;
+import schedulex.algorithm.Genetic_Algorithm;
 import schedulex.domain.Events;
 import schedulex.domain.Groups;
 import schedulex.domain.Modules;
@@ -315,7 +318,20 @@ public class UserSchedule extends javax.swing.JFrame {
     	 			Schedule = new EventScheduler(createdEvents, dataCollection);
     	 			Schedule.initialize();
         	 		population.add(Schedule);
-    	 		
+        	 		IntStream.range(0,11).forEach(x -> 
+        	 		{
+        	 			EventScheduler s= new EventScheduler(Schedule, dataCollection);
+        	 			//s.initialize();
+        	 			population.add(s);
+        	 		}
+        	 				
+        	 				);
+        	 	population.sort((schedule1, schedule2) -> {
+        	        int returnValue = 0;
+        	        if (schedule1.calculateFitness() > schedule2.calculateFitness()) returnValue = -1;
+        	        else if (schedule1.calculateFitness()< schedule2.calculateFitness()) returnValue = 1;
+        	        return returnValue;
+        	       });
     	 		System.out.println("1----------------------------------------------------------------");
     	 		for (EventScheduler es: population){
     	 			System.out.println(es.printout() +"| Fitness is: "+es.calculateFitness() );

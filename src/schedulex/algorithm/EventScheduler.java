@@ -24,7 +24,14 @@ public class EventScheduler {
 	      events= eva;
      
 	}
-	   
+	   public EventScheduler(EventScheduler  s, Data data){
+		   this.data=data;
+		   events=new ArrayList<Events>();
+		   for(Events e: s.events){
+			    events.add(new Events(e.getModule(), e.getGroups(), e.getStaff(), e.getDuration(), e.getEventType()));
+		   }
+		   initialize();
+	   }
 	  public ArrayList<Events> initialize() {
 		  			events.forEach(x-> {
 		  				
